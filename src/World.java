@@ -18,7 +18,24 @@ public class World {
     }
 
     public void update() {
+// Prevent wolves from overlapping.
+for (Entity first : entities) {
 
+    if (first instanceof Wolf) {
+
+        Wolf firstWolf = (Wolf) first;
+
+        for (Entity second : entities) {
+
+            if (second instanceof Wolf && first != second) {
+
+                Wolf secondWolf = (Wolf) second;
+
+                firstWolf.separateFrom(secondWolf);
+            }
+        }
+    }
+}
         // Move rabbits
         for (Entity entity : entities) {
             if (entity instanceof Rabbit) {
@@ -107,7 +124,7 @@ public class World {
             }
         }
 
-        if (rabbitCount < 15) {
+        if (rabbitCount < 8) {
 
             for (Entity entity : entities) {
 
@@ -115,7 +132,7 @@ public class World {
 
                     Rabbit rabbit = (Rabbit) entity;
 
-                    if (Math.random() < 0.05) {
+                    if (Math.random() < 0.01) {
                         newborns.add(rabbit.reproduce());
                     }
                 }

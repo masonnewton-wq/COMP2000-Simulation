@@ -22,12 +22,29 @@ public class Wolf extends Entity {
 
         double distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance > 5) {
+        if (distance > 20) {
             x += (dx / distance) * 2;
             y += (dy / distance) * 2;
         }
 
-        // Keep the wolf inside the simulation area.
+        keepInsideWorld();
+    }
+
+    public void separateFrom(Wolf other) {
+        double dx = x - other.getX();
+        double dy = y - other.getY();
+
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance > 0 && distance < 30) {
+            x += (dx / distance) * 2;
+            y += (dy / distance) * 2;
+        }
+
+        keepInsideWorld();
+    }
+
+    private void keepInsideWorld() {
         if (x < 10) {
             x = 10;
         }
